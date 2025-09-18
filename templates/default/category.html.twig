@@ -1,7 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-    {{ app.request.get('aliasDeMaCategorie')|capitalize }}
+    {# Ex depuis app : {{ app.request.get('aliasDeMaCategorie')|capitalize }}#}
+    {{ category.name|capitalize }}
 {% endblock %}
 
 {% block body %}
@@ -12,7 +13,7 @@
         <!-- Titre de la page -->
         <div class="p-3 mx-auto text-center">
             <h1 class="display-4">
-                {{ app.request.get('aliasDeMaCategorie')|capitalize }}
+                {{ category.name|capitalize }}
             </h1>
         </div>
 
@@ -20,7 +21,7 @@
         <div class="py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {% for i in 0..5 %}
+                    {% for post in category.posts %}
                         {% include 'partials/_card.html.twig' %}
                     {% endfor %}
                 </div>
