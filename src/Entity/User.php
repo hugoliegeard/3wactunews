@@ -51,8 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
     private Collection $comments;
 
-    public function __construct()
+    public function __construct(array $roles = ['ROLE_USER'])
     {
+        $this->roles = $roles;
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }

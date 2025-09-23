@@ -24,12 +24,12 @@ class PostType extends AbstractType
                     'placeholder' => 'Saisissez le titre',
                 ]
             ])
-            ->add('slug', TextType::class, [
+            /*->add('slug', TextType::class, [
                 'label' => 'Saisissez un alias',
                 'attr' => [
                     'placeholder' => 'Saisissez un alias',
                 ]
-            ])
+            ])*/
             ->add('content', TextareaType::class, [
                 'label' => 'Saisissez votre article'
             ])
@@ -43,10 +43,10 @@ class PostType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name',
             ])
-            ->add('user', EntityType::class, [
+            /*->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'firstname',
-            ])
+            ])*/
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer mon article',
                 'attr' => [
