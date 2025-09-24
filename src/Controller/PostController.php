@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -20,6 +22,7 @@ class PostController extends AbstractController
     #[IsGranted('ROLE_AUTHOR')]
     public function addPost(Request $request,
                             SluggerInterface $slugger,
+                            #[Autowire('%kernel.project_dir%/public/uploads/posts')] string $postsDirectory,
                             EntityManagerInterface $manager) {
 
         # Pour créer un formulaire avec Symfony
@@ -45,6 +48,29 @@ class PostController extends AbstractController
                     $post->getTitle()
                 )
             );
+
+            # Traitement de l'upload de l'image (SIMPLIFIE)
+            # Récupération de l'image uploadé
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('imageFile')->getData();
+
+            # Si une image est bien chargée, alors on commence le processus.
+            if ($imageFile) {
+
+                # Le nom de l'image, correspond a l'alias de l'article suivi d'un chiffre aléatoire puis l'extension.
+                # ex. nouveau-vote-a-l-assemblee-national-345678.jpg
+                $newFilename = $post->getSlug().'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                // Déplacement du fichier depuis tmp vers le dossier /uploads
+                try {
+                    $imageFile->move($postsDirectory, $newFilename);
+                } catch (FileException $e) {
+                    # TODO En cas d'erreur traitement ici
+                }
+
+                # On ajoute le nom du fichier dans la BDD
+                $post->setImage($newFilename);
+            }
 
             # 6. Enregistrement dans la BDD
             $manager->persist($post);

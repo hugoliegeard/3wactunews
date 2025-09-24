@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="card">
-                    <img src="{{ post.image }}"
+                    <img src="{{ asset('uploads/posts/' ~ post.image) }}"
                          class="card-img-top mt-2"
                          alt="{{ post.title }}">
                     <div class="card-body">
@@ -12,7 +12,12 @@
                             Rédigé par : {{ post.user.firstname }} -
                             le {{ post.createdAt | date('d/m/Y') }}
                         </small>
-                        <a href="#" class="btn mt-4 w-100 btn-outline-dark">
+                        <a href="{{ path('default_post', {
+                            'category' : post.category.slug,
+                            'slug' : post.slug,
+                            'id' : post.id
+                        }) }}"
+                           class="btn mt-4 w-100 btn-outline-dark">
                             Lire la suite
                         </a>
                     </div>

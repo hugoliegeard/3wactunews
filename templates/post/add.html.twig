@@ -2,6 +2,29 @@
 
 {% block title %}Rédiger un article{% endblock %}
 
+{#
+    Pour le rendu de l'editeur WYSIWYG on utilise Jodit
+    cf. https://xdsoft.net/jodit/docs/docs/getting-started.html
+#}
+
+{% block stylesheets %}
+    {{ parent() }} {# Permet de garder le contenu du parent #}
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/jodit@latest/es2021/jodit.fat.min.css"
+    />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }} {# Permet de garder le contenu du parent #}
+    <script
+        src="https://cdn.jsdelivr.net/npm/jodit@latest/es2021/jodit.fat.min.js">
+    </script>
+    <script>
+        Jodit.make('#post_content');
+    </script>
+{% endblock %}
+
 {% block body %}
     <main>
         <!-- Titre de la page -->

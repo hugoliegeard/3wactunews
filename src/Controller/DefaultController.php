@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Category;
+use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,6 +36,19 @@ class DefaultController extends AbstractController
         # Passer a ma vue la catégorie
         return $this->render('default/category.html.twig', [
             'category' => $category,
+        ]);
+    }
+
+    /**
+     * Permet d'afficher un article
+     * @param Post $post
+     * @return Response
+     */
+    #[Route('/{category:category}/{slug:post}_{id:post}', name: 'default_post', methods: ['GET'])]
+    public function post(Post $post): Response
+    {
+        return $this->render('default/post.html.twig', [
+            'post' => $post,
         ]);
     }
 

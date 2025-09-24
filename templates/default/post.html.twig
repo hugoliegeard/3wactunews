@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title}}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <article class="py-5">
+                    <!-- En-tête de l'article -->
+                    <header class="mb-5">
+                        <div class="mb-3">
+                            <span class="badge bg-primary me-2">{{ post.category.name }}</span>
+                            <small class="text-muted">{{ post.createdAt | date('d/m/Y') }}</small>
+                        </div>
+                        <h1 class="display-4 fw-bold mb-3">
+                            {{ post.title }}
+                        </h1>
+                        <div class="d-flex align-items-center">
+                            <img src="https://placehold.co/50x50" alt="Auteur" class="rounded-circle me-3">
+                            <div>
+                                <strong class="d-block">{{ post.user.firstname }}</strong>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Image principale -->
+                    <figure class="mb-5">
+                        <img src="{{ asset('uploads/posts/' ~ post.image) }}"
+                             alt="{{ post.title }}" class="img-fluid rounded shadow">
+                        <figcaption class="figure-caption text-center mt-2">
+                            {{ post.title }}
+                        </figcaption>
+                    </figure>
+
+                    <!-- Contenu de l'article -->
+                    <div class="article-content">
+                        {{ post.content | raw }}
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

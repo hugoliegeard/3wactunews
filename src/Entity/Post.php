@@ -23,8 +23,6 @@ class Post
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Vous devez saisir un alias.')]
-    #[Assert\Length(max: 255, maxMessage: 'Pas plus de {{ limit }} caractères.')]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]

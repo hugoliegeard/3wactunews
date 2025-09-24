@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,11 +34,10 @@ class PostType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'Saisissez votre article'
             ])
-            ->add('image', TextType::class, [
-                'label' => "Saisissez l'URL de votre image",
-                'attr' => [
-                    'placeholder' => "Saisissez l'URL de votre image",
-                ]
+            ->add('imageFile',FileType::class, [
+                'label' => "Illustration de l'article",
+                # imageFile n'existe pas dans l'entité "POST"
+                'mapped' => false,
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
